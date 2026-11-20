@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!-- Ruta: admin_dashboard.html -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CercApp · Panel de administración</title>
+  <meta name="theme-color" content="#071a33">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-admin">
+  <div class="admin-layout">
+
+    <!-- ===================== BARRA LATERAL ===================== -->
+    <aside class="sidebar">
+      <div class="sidebar__top">
+        <a class="brand" href="index.html" aria-label="CercApp, inicio">
+          <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2C11.7 2 5 8.6 5 16.8 5 28 20 38 20 38s15-10 15-21.2C35 8.6 28.3 2 20 2Z" fill="#fff"/><path d="M12.5 18.5 20 12.5l7.5 6v7a1 1 0 0 1-1 1h-4v-5h-5v5h-4a1 1 0 0 1-1-1z" fill="#0a2240"/><circle cx="29.5" cy="8.5" r="3.5" fill="#f28c0f"/></svg>
+          <span class="brand__text"><strong>CercApp</strong><small>Administración</small></span>
+        </a>
+        <button type="button" class="btn-icon" data-salir aria-label="Cerrar sesión"><i data-icono="logout"></i></button>
+      </div>
+      <nav class="sidebar__nav" id="nav-admin" aria-label="Secciones">
+        <button type="button" class="sidebar__link is-active" data-vista="resumen"><i data-icono="chart"></i> Resumen</button>
+        <button type="button" class="sidebar__link" data-vista="usuarios"><i data-icono="users"></i> Usuarios</button>
+        <button type="button" class="sidebar__link" data-vista="servicios"><i data-icono="briefcase"></i> Servicios <span class="count" id="cuenta-pendientes"></span></button>
+        <button type="button" class="sidebar__link" data-vista="solicitudes"><i data-icono="clipboard"></i> Solicitudes</button>
+      </nav>
+      <div class="sidebar__foot">
+        <span class="conn-badge" data-conexion>Conectando…</span>
+        <button type="button" class="sidebar__link" id="btn-restablecer"><i data-icono="refresh"></i> Restablecer datos demo</button>
+        <button type="button" class="sidebar__link" data-salir><i data-icono="logout"></i> Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+
+      <!-- ===================== VISTA: RESUMEN ===================== -->
+      <section class="vista" id="vista-resumen">
+        <div class="admin-topbar">
+          <div>
+            <p class="subtle" id="saludo-admin">Panel de control</p>
+            <h1>Resumen de la plataforma</h1>
+          </div>
+          <span class="conn-badge" data-conexion>Conectando…</span>
+        </div>
+        <div class="stat-grid" id="estadisticas"></div>
+        <div class="panel-grid">
+          <div class="card panel">
+            <div class="row-between">
+              <h2>Pendientes de moderación</h2>
+              <button type="button" class="link-btn" data-ir="servicios" data-filtro-estado="PENDIENTE">Ver todos</button>
+            </div>
+            <div id="lista-moderacion"></div>
+          </div>
+          <div class="card panel">
+            <h2>Servicios publicados por categoría</h2>
+            <div class="bar-list" id="barras-categorias"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== VISTA: USUARIOS (CRUD) ===================== -->
+      <section class="vista" id="vista-usuarios" hidden>
+        <div class="admin-topbar">
+          <div>
+            <h1>Usuarios</h1>
+            <p class="muted" id="conteo-usuarios"></p>
+          </div>
+          <button type="button" class="btn btn-accent" id="btn-nuevo-usuario"><i data-icono="plus"></i> Nuevo usuario</button>
+        </div>
+        <div class="toolbar">
+          <label class="search-bar" for="buscar-usuario">
+            <i data-icono="search"></i><span class="sr-only">Buscar usuario</span>
+            <input id="buscar-usuario" type="search" placeholder="Buscar por nombre, correo, teléfono o barrio" autocomplete="off">
+          </label>
+          <select class="input" id="filtro-rol" aria-label="Filtrar por rol">
+            <option value="">Todos los roles</option>
+            <option value="ADMIN">Administradores</option>
+            <option value="TRABAJADOR">Trabajadores</option>
+            <option value="CLIENTE">Clientes</option>
+          </select>
+          <select class="input" id="filtro-estado-usuario" aria-label="Filtrar por estado">
+            <option value="">Todos los estados</option>
+            <option value="ACTIVO">Activos</option>
+            <option value="SUSPENDIDO">Suspendidos</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr><th>Usuario</th><th>Rol</th><th>Teléfono</th><th>Barrio</th><th>Verificado</th><th>Estado</th><th style="text-align:right">Acciones</th></tr>
+            </thead>
+            <tbody id="tabla-usuarios"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===================== VISTA: SERVICIOS (CRUD + MODERACIÓN) ===================== -->
+      <section class="vista" id="vista-servicios" hidden>
+        <div class="admin-topbar">
+          <div>
+            <h1>Servicios del hogar</h1>
+            <p class="muted" id="conteo-servicios"></p>
+          </div>
+          <button type="button" class="btn btn-accent" id="btn-nuevo-servicio"><i data-icono="plus"></i> Nuevo servicio</button>
+        </div>
+        <div class="toolbar">
+          <label class="search-bar" for="buscar-servicio">
+            <i data-icono="search"></i><span class="sr-only">Buscar servicio</span>
+            <input id="buscar-servicio" type="search" placeholder="Buscar por título, trabajador o barrio" autocomplete="off">
+          </label>
+          <select class="input" id="filtro-categoria" aria-label="Filtrar por categoría"></select>
+          <select class="input" id="filtro-estado-servicio" aria-label="Filtrar por estado">
+            <option value="">Todos los estados</option>
+            <option value="PENDIENTE">En revisión</option>
+            <option value="PUBLICADO">Publicados</option>
+            <option value="PAUSADO">Pausados</option>
+            <option value="RECHAZADO">Rechazados</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr><th>Servicio</th><th>Trabajador</th><th>Tarifa</th><th>Reputación</th><th>Estado (moderación)</th><th style="text-align:right">Acciones</th></tr>
+            </thead>
+            <tbody id="tabla-servicios"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===================== VISTA: SOLICITUDES ===================== -->
+      <section class="vista" id="vista-solicitudes" hidden>
+        <div class="admin-topbar">
+          <div>
+            <h1>Solicitudes</h1>
+            <p class="muted" id="conteo-solicitudes"></p>
+          </div>
+        </div>
+        <div class="toolbar">
+          <label class="search-bar" for="buscar-solicitud">
+            <i data-icono="search"></i><span class="sr-only">Buscar solicitud</span>
+            <input id="buscar-solicitud" type="search" placeholder="Buscar por cliente, servicio o barrio" autocomplete="off">
+          </label>
+          <select class="input" id="filtro-estado-solicitud" aria-label="Filtrar por estado"></select>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr><th>Cliente</th><th>Servicio</th><th>Fecha</th><th>Calificación</th><th>Estado</th><th style="text-align:right">Acciones</th></tr>
+            </thead>
+            <tbody id="tabla-solicitudes"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ===================== MODAL: USUARIO ===================== -->
+  <dialog class="modal modal--wide" id="modal-usuario" aria-labelledby="titulo-modal-usuario">
+    <div class="modal__header">
+      <h2 id="titulo-modal-usuario">Nuevo usuario</h2>
+      <button type="button" class="btn-icon" data-cerrar-modal aria-label="Cerrar"><i data-icono="x"></i></button>
+    </div>
+    <form id="form-usuario" class="modal__body stack" novalidate>
+      <input type="hidden" name="editandoId">
+      <div class="form-alert" role="alert"></div>
+      <div class="form-grid form-grid--2">
+        <div class="field span-2">
+          <label for="usr-nombre">Nombre completo <span class="req">*</span></label>
+          <input class="input" id="usr-nombre" name="nombre" maxlength="100">
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="usr-email">Correo <span class="req">*</span></label>
+          <input class="input" id="usr-email" name="email" type="email" maxlength="120">
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="usr-telefono">Teléfono (10 dígitos) <span class="req">*</span></label>
+          <input class="input" id="usr-telefono" name="telefono" type="text" data-solo-numeros maxlength="10">
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="usr-rol">Rol <span class="req">*</span></label>
+          <select class="input" id="usr-rol" name="rol">
+            <option value="">Selecciona un rol</option>
+            <option value="CLIENTE">Cliente</option>
+            <option value="TRABAJADOR">Trabajador</option>
+            <option value="ADMIN">Administrador</option>
+          </select>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="usr-estado">Estado <span class="req">*</span></label>
+          <select class="input" id="usr-estado" name="estado">
+            <option value="ACTIVO">Activo</option>
+            <option value="SUSPENDIDO">Suspendido</option>
+          </select>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="usr-barrio">Barrio</label>
+          <select class="input" id="usr-barrio" name="barrio"></select>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="usr-direccion">Dirección</label>
+          <input class="input" id="usr-direccion" name="direccion" maxlength="150">
+          <span class="field-error"></span>
+        </div>
+        <div class="field span-2" data-solo-trabajador>
+          <label for="usr-especialidad">Especialidad <span class="req">*</span></label>
+          <input class="input" id="usr-especialidad" name="especialidad" maxlength="120">
+          <span class="field-error"></span>
+        </div>
+        <div class="field" data-solo-trabajador>
+          <label for="usr-anios">Años de experiencia <span class="req">*</span></label>
+          <input class="input" id="usr-anios" name="aniosExperiencia" type="text" data-solo-numeros maxlength="2" placeholder="0 a 60">
+          <span class="field-error"></span>
+        </div>
+        <div class="field" data-solo-trabajador>
+          <span class="field-label">Verificación</span>
+          <label class="check-row" style="min-height:46px"><input type="checkbox" name="verificado"> Cédula y antecedentes verificados</label>
+        </div>
+        <div class="field span-2">
+          <label for="usr-password">Contraseña <span class="req" id="req-password">*</span></label>
+          <input class="input" id="usr-password" name="password" type="password" maxlength="100" autocomplete="new-password">
+          <span class="field-hint" id="ayuda-password">Mínimo 6 caracteres.</span>
+          <span class="field-error"></span>
+        </div>
+      </div>
+      <div class="row wrap" style="justify-content:flex-end">
+        <button type="button" class="btn btn-ghost" data-cerrar-modal>Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar usuario</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ===================== MODAL: SERVICIO ===================== -->
+  <dialog class="modal modal--wide" id="modal-servicio" aria-labelledby="titulo-modal-servicio">
+    <div class="modal__header">
+      <h2 id="titulo-modal-servicio">Nuevo servicio</h2>
+      <button type="button" class="btn-icon" data-cerrar-modal aria-label="Cerrar"><i data-icono="x"></i></button>
+    </div>
+    <form id="form-servicio" class="modal__body stack" novalidate>
+      <input type="hidden" name="editandoId">
+      <div class="form-alert" role="alert"></div>
+      <div class="form-grid form-grid--2">
+        <div class="field span-2">
+          <label for="adm-svc-trabajador">Trabajador que presta el servicio <span class="req">*</span></label>
+          <select class="input" id="adm-svc-trabajador" name="trabajadorId"></select>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="adm-svc-categoria">Categoría <span class="req">*</span></label>
+          <select class="input" id="adm-svc-categoria" name="categoria"></select>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="adm-svc-titulo">Título <span class="req">*</span></label>
+          <input class="input" id="adm-svc-titulo" name="titulo" maxlength="120">
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="adm-svc-tarifa">Tarifa base (COP) <span class="req">*</span></label>
+          <input class="input" id="adm-svc-tarifa" name="tarifa" type="text" data-solo-numeros maxlength="8" placeholder="Ej: 45000">
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="adm-svc-unidad">Se cobra <span class="req">*</span></label>
+          <select class="input" id="adm-svc-unidad" name="unidadTarifa"></select>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="adm-svc-estado">Estado de publicación <span class="req">*</span></label>
+          <select class="input" id="adm-svc-estado" name="estado"></select>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="adm-svc-disponibilidad">Disponibilidad <span class="req">*</span></label>
+          <input class="input" id="adm-svc-disponibilidad" name="disponibilidad" maxlength="150" list="adm-lista-disponibilidad">
+          <datalist id="adm-lista-disponibilidad"></datalist>
+          <span class="field-error"></span>
+        </div>
+        <div class="field span-2">
+          <span class="field-label">Zona de cobertura <span class="req">*</span></span>
+          <div class="chip-row chip-row--wrap" id="adm-svc-zonas" role="group" aria-label="Barrios de cobertura"></div>
+          <span class="field-error"></span>
+        </div>
+        <div class="field span-2">
+          <div class="field-row">
+            <label for="adm-svc-descripcion">Descripción <span class="req">*</span></label>
+            <span class="char-count" id="contador-adm-svc"></span>
+          </div>
+          <textarea class="input" id="adm-svc-descripcion" name="descripcion" maxlength="1000" data-contador="contador-adm-svc"></textarea>
+          <span class="field-error"></span>
+        </div>
+      </div>
+      <div class="row wrap" style="justify-content:flex-end">
+        <button type="button" class="btn btn-ghost" data-cerrar-modal>Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar servicio</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="common.js"></script>
+  <script src="admin_dashboard.js"></script>
+</body>
+</html>

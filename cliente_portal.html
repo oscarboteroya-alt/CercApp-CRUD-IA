@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!-- Ruta: cliente_portal.html -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CercApp · Portal del cliente</title>
+  <meta name="theme-color" content="#0a2240">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-app">
+
+  <!-- ===================== ENCABEZADO ===================== -->
+  <header class="app-header">
+    <div class="container app-header__inner">
+      <a class="brand" href="index.html" aria-label="CercApp, inicio">
+        <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2C11.7 2 5 8.6 5 16.8 5 28 20 38 20 38s15-10 15-21.2C35 8.6 28.3 2 20 2Z" fill="#0a2240"/><path d="M12.5 18.5 20 12.5l7.5 6v7a1 1 0 0 1-1 1h-4v-5h-5v5h-4a1 1 0 0 1-1-1z" fill="#fff"/><circle cx="29.5" cy="8.5" r="3.5" fill="#f28c0f"/></svg>
+        <span class="brand__text"><strong>CercApp</strong><small>Servicios del hogar</small></span>
+      </a>
+      <div class="app-header__right">
+        <span class="conn-badge" data-conexion>Conectando…</span>
+        <span class="location-pill"><i data-icono="pin"></i> Neiva, Huila</span>
+        <button type="button" class="avatar-btn" id="btn-avatar" aria-label="Ir a mi perfil"></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navegación: barra inferior en móvil, pestañas en escritorio -->
+  <nav class="app-tabs" aria-label="Secciones del portal">
+    <div class="app-tabs__inner" id="tabs">
+      <button type="button" class="app-tab is-active" data-vista="explorar"><i data-icono="compass"></i>Explorar</button>
+      <button type="button" class="app-tab" data-vista="favoritos"><i data-icono="heart"></i>Favoritos<span class="app-tab__count" id="cuenta-favoritos"></span></button>
+      <button type="button" class="app-tab" data-vista="solicitudes"><i data-icono="clipboard"></i>Mis solicitudes<span class="app-tab__count" id="cuenta-solicitudes"></span></button>
+      <button type="button" class="app-tab" data-vista="perfil"><i data-icono="user"></i>Mi perfil</button>
+    </div>
+  </nav>
+
+  <main class="container app-main">
+
+    <!-- ===================== VISTA: EXPLORAR ===================== -->
+    <section class="vista" id="vista-explorar" aria-labelledby="saludo">
+      <div class="greeting">
+        <p class="greeting__hi">¡Hola de nuevo! 👋</p>
+        <h1 id="saludo">¡Hola!</h1>
+        <p>¿Qué servicio necesitas hoy en Neiva?</p>
+      </div>
+
+      <div class="stack">
+        <div class="search-row">
+          <label class="search-bar" for="buscador">
+            <i data-icono="search"></i>
+            <span class="sr-only">Buscar servicios</span>
+            <input id="buscador" type="search" placeholder="Busca plomero, electricista, cerrajero…" maxlength="60" autocomplete="off">
+          </label>
+          <button type="button" class="btn-icon btn-icon--solid" id="btn-filtros" aria-expanded="false" aria-controls="panel-filtros" aria-label="Mostrar filtros">
+            <i data-icono="sliders"></i>
+          </button>
+        </div>
+
+        <!-- Filtros avanzados -->
+        <form class="card filter-panel" id="panel-filtros" hidden novalidate>
+          <div class="field">
+            <label for="filtro-precio">Tarifa máxima (COP)</label>
+            <input class="input" id="filtro-precio" name="precioMax" type="text" data-solo-numeros maxlength="7" placeholder="Ej: 60000">
+            <span class="field-error"></span>
+          </div>
+          <div class="field">
+            <label for="filtro-calificacion">Calificación mínima</label>
+            <select class="input" id="filtro-calificacion" name="calificacionMin">
+              <option value="0">Cualquiera</option>
+              <option value="4">4.0 ★ o más</option>
+              <option value="4.5">4.5 ★ o más</option>
+              <option value="4.8">4.8 ★ o más</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="filtro-orden">Ordenar por</label>
+            <select class="input" id="filtro-orden" name="orden">
+              <option value="relevancia">Recomendados</option>
+              <option value="calificacion">Mejor calificados</option>
+              <option value="precio-asc">Menor tarifa</option>
+              <option value="precio-desc">Mayor tarifa</option>
+              <option value="resenas">Más reseñas</option>
+            </select>
+          </div>
+          <div class="field">
+            <span class="field-label">Confianza</span>
+            <label class="check-row" style="min-height:46px"><input type="checkbox" name="soloVerificados"> Solo verificados</label>
+          </div>
+          <div class="filter-panel__actions">
+            <span class="subtle">Los resultados se actualizan mientras escribes.</span>
+            <button type="button" class="btn btn-ghost btn-sm" id="btn-limpiar-filtros">Limpiar filtros</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="promo-banner">
+        <span class="badge">EN MENOS DE 30 MIN</span>
+        <h2>Servicios 100% verificados en Neiva</h2>
+        <p>Especialistas locales con antecedentes y cédula validada.</p>
+        <svg class="promo-banner__shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+      </div>
+
+      <!-- Solicitud en curso (se muestra solo si hay una activa) -->
+      <div class="card live-card" id="tarjeta-en-curso" hidden></div>
+
+      <div>
+        <div class="section-head">
+          <h2>Categorías populares</h2>
+          <button type="button" class="link-btn" id="btn-todas-categorias">Ver todas</button>
+        </div>
+        <div class="cat-grid" id="grid-categorias"></div>
+      </div>
+
+      <div>
+        <p class="label-caps" style="margin-bottom:8px">Filtrar por barrio</p>
+        <div class="chip-row" id="chips-barrios"></div>
+      </div>
+
+      <div class="explorar-layout">
+        <div class="stack">
+          <div class="section-head">
+            <div>
+              <h2 id="titulo-resultados">Profesionales destacados</h2>
+              <p class="subtle" id="conteo-resultados">Cargando…</p>
+            </div>
+          </div>
+          <div class="active-filters" id="filtros-activos"></div>
+          <div class="pro-list" id="lista-servicios">
+            <div class="skeleton"></div><div class="skeleton"></div>
+          </div>
+        </div>
+        <aside class="explorar-aside">
+          <div class="guarantee-card">
+            <span class="guarantee-card__icon"><i data-icono="shield"></i></span>
+            <div>
+              <h3>Garantía comunitaria CercApp</h3>
+              <p>Tu pago permanece protegido hasta que confirmes la entrega satisfactoria del servicio en Neiva.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===================== VISTA: FAVORITOS ===================== -->
+    <section class="vista" id="vista-favoritos" hidden>
+      <div class="vista-head">
+        <h1>Mis favoritos</h1>
+        <p class="muted">Los servicios que guardaste para contratar rápido.</p>
+      </div>
+      <div class="pro-list" id="lista-favoritos"></div>
+    </section>
+
+    <!-- ===================== VISTA: SOLICITUDES ===================== -->
+    <section class="vista" id="vista-solicitudes" hidden>
+      <div class="vista-head">
+        <p class="subtle">Historial y estado actual</p>
+        <h1>Servicios contratados</h1>
+      </div>
+      <div class="segmented" id="filtro-solicitudes" role="tablist" aria-label="Filtrar solicitudes">
+        <button type="button" data-filtro="TODAS" class="is-active">Todas</button>
+        <button type="button" data-filtro="PENDIENTES">Pendientes</button>
+        <button type="button" data-filtro="EN_PROCESO">En proceso</button>
+        <button type="button" data-filtro="COMPLETADAS">Completadas</button>
+        <button type="button" data-filtro="CANCELADAS">Canceladas</button>
+      </div>
+      <div class="order-list" id="lista-solicitudes"></div>
+      <div class="guarantee-card">
+        <span class="guarantee-card__icon"><i data-icono="shield"></i></span>
+        <div>
+          <h3>Garantía CercApp Neiva</h3>
+          <p>Todos los trabajos cuentan con soporte y cobertura directa por 30 días.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== VISTA: PERFIL ===================== -->
+    <section class="vista" id="vista-perfil" hidden>
+      <div class="vista-head">
+        <h1>Mi perfil</h1>
+        <p class="muted">Tus datos de contacto se comparten con el profesional solo cuando solicitas un servicio.</p>
+      </div>
+      <div class="card card-pad stack">
+        <div class="row" id="perfil-resumen"></div>
+        <form id="form-perfil" class="stack" novalidate>
+          <div class="form-alert" role="alert"></div>
+          <div class="form-grid form-grid--2">
+            <div class="field span-2">
+              <label for="perfil-nombre">Nombre completo <span class="req">*</span></label>
+              <input class="input" id="perfil-nombre" name="nombre" maxlength="100" autocomplete="name">
+              <span class="field-error"></span>
+            </div>
+            <div class="field">
+              <label for="perfil-email">Correo <span class="req">*</span></label>
+              <input class="input" id="perfil-email" name="email" type="email" maxlength="120">
+              <span class="field-error"></span>
+            </div>
+            <div class="field">
+              <label for="perfil-telefono">Celular (10 dígitos) <span class="req">*</span></label>
+              <input class="input" id="perfil-telefono" name="telefono" type="text" data-solo-numeros maxlength="10">
+              <span class="field-error"></span>
+            </div>
+            <div class="field">
+              <label for="perfil-barrio">Barrio <span class="req">*</span></label>
+              <select class="input" id="perfil-barrio" name="barrio"></select>
+              <span class="field-error"></span>
+            </div>
+            <div class="field">
+              <label for="perfil-direccion">Dirección <span class="req">*</span></label>
+              <input class="input" id="perfil-direccion" name="direccion" maxlength="150" placeholder="Calle 14 # 22-45">
+              <span class="field-error"></span>
+            </div>
+            <div class="field span-2">
+              <label for="perfil-password">Nueva contraseña</label>
+              <input class="input" id="perfil-password" name="password" type="password" maxlength="100" autocomplete="new-password" placeholder="Déjala vacía para conservar la actual">
+              <span class="field-error"></span>
+            </div>
+          </div>
+          <div class="row wrap">
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            <button type="button" class="btn btn-outline" data-salir><i data-icono="logout"></i> Cerrar sesión</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== MODAL: PERFIL PROFESIONAL ===================== -->
+  <dialog class="modal modal--wide" id="modal-profesional" aria-labelledby="titulo-profesional">
+    <div class="modal__header">
+      <h2 id="titulo-profesional">Perfil profesional</h2>
+      <button type="button" class="btn-icon" data-cerrar-modal aria-label="Cerrar"><i data-icono="x"></i></button>
+    </div>
+    <div class="modal__body stack" id="contenido-profesional"></div>
+    <div class="modal__footer">
+      <button type="button" class="btn btn-accent btn-lg btn-block" id="btn-solicitar-desde-perfil"><i data-icono="calendar"></i> Solicitar servicio</button>
+    </div>
+  </dialog>
+
+  <!-- ===================== MODAL: SOLICITAR SERVICIO ===================== -->
+  <dialog class="modal modal--wide" id="modal-solicitar" aria-labelledby="titulo-solicitar">
+    <div class="modal__header">
+      <h2 id="titulo-solicitar">Solicitar servicio</h2>
+      <button type="button" class="btn-icon" data-cerrar-modal aria-label="Cerrar"><i data-icono="x"></i></button>
+    </div>
+    <form id="form-solicitud" class="modal__body stack" novalidate>
+      <div class="mini-pro" id="solicitud-profesional"></div>
+      <div class="form-alert" role="alert"></div>
+
+      <div class="field">
+        <label for="sol-servicio">Tipo de servicio <span class="req">*</span></label>
+        <select class="input" id="sol-servicio" name="servicioId"></select>
+        <span class="field-error"></span>
+      </div>
+
+      <div class="field">
+        <div class="field-row">
+          <label for="sol-descripcion">Describe el problema o necesidad <span class="req">*</span></label>
+          <span class="char-count" id="contador-descripcion"></span>
+        </div>
+        <textarea class="input" id="sol-descripcion" name="descripcion" maxlength="1000" data-contador="contador-descripcion"
+                  placeholder="Ej: Tengo una fuga continua debajo del lavaplatos de la cocina que gotea hacia el mueble…"></textarea>
+        <span class="field-hint">Mínimo 20 caracteres.</span>
+        <span class="field-error"></span>
+      </div>
+
+      <div class="form-grid form-grid--2">
+        <div class="field">
+          <label for="sol-fecha">Día <span class="req">*</span></label>
+          <input class="input" id="sol-fecha" name="fechaPreferida" type="date">
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="sol-franja">Horario <span class="req">*</span></label>
+          <select class="input" id="sol-franja" name="franjaHoraria"></select>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="sol-direccion">Dirección del servicio <span class="req">*</span></label>
+          <input class="input" id="sol-direccion" name="direccion" maxlength="150" placeholder="Calle 14 # 22-45">
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="sol-barrio">Barrio <span class="req">*</span></label>
+          <select class="input" id="sol-barrio" name="barrio"></select>
+          <span class="field-error"></span>
+        </div>
+      </div>
+
+      <div class="quote-box" id="cotizacion"></div>
+
+      <button type="submit" class="btn btn-accent btn-lg btn-block">Confirmar y enviar solicitud <i data-icono="send"></i></button>
+      <p class="subtle" style="text-align:center">Protegido por la Garantía de Servicio CercApp</p>
+    </form>
+  </dialog>
+
+  <script src="common.js"></script>
+  <script src="cliente_portal.js"></script>
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<!-- Ruta: index.html -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CercApp · Servicios del hogar confiables en Neiva</title>
+  <meta name="description" content="CercApp conecta hogares de Neiva con plomeros, electricistas, cerrajeros, personal de aseo y carpinteros verificados.">
+  <meta name="theme-color" content="#0a2240">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-landing">
+
+  <!-- ===================== ENCABEZADO ===================== -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="CercApp, inicio">
+        <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2C11.7 2 5 8.6 5 16.8 5 28 20 38 20 38s15-10 15-21.2C35 8.6 28.3 2 20 2Z" fill="#0a2240"/><path d="M12.5 18.5 20 12.5l7.5 6v7a1 1 0 0 1-1 1h-4v-5h-5v5h-4a1 1 0 0 1-1-1z" fill="#fff"/><circle cx="29.5" cy="8.5" r="3.5" fill="#f28c0f"/></svg>
+        <span class="brand__text"><strong>CercApp</strong><small>Servicios del hogar</small></span>
+      </a>
+      <nav class="site-nav" aria-label="Secciones">
+        <a href="#categorias">Servicios</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#accesos">Accesos</a>
+      </nav>
+      <div class="site-header__actions">
+        <span class="conn-badge" data-conexion>Conectando…</span>
+        <button type="button" class="btn btn-primary btn-sm" data-abrir-acceso="CLIENTE">Ingresar</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== HÉROE ===================== -->
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <span class="eyebrow"><i data-icono="pin"></i> NEIVA, HUILA</span>
+          <h1>Tu hogar en buenas manos, <span class="text-accent">cerca de ti</span>.</h1>
+          <p class="lead">Plomeros, electricistas, cerrajeros, personal de aseo y carpinteros de tu barrio, con identidad verificada y tarifas claras desde el primer mensaje.</p>
+
+          <form class="search-bar hero__search" id="form-busqueda-hero" role="search">
+            <i data-icono="search"></i>
+            <label for="busqueda-hero" class="sr-only">¿Qué necesitas arreglar?</label>
+            <input id="busqueda-hero" name="q" type="search" placeholder="Ej: fuga de agua, cambiar guarda, aseo…" maxlength="60">
+            <button type="submit" class="btn btn-accent">Buscar</button>
+          </form>
+
+          <ul class="hero__stats" aria-label="CercApp en cifras">
+            <li><strong id="stat-profesionales">—</strong><span>profesionales activos</span></li>
+            <li><strong id="stat-servicios">—</strong><span>servicios publicados</span></li>
+            <li><strong id="stat-calificacion">—</strong><span>calificación promedio</span></li>
+          </ul>
+        </div>
+
+        <!-- Vista previa ilustrativa inspirada en la app móvil -->
+        <div class="hero__visual" aria-hidden="true">
+          <div class="mock-banner">
+            <span class="badge">EN MENOS DE 30 MIN</span>
+            <h3>Servicios 100% verificados en Neiva</h3>
+            <p>Especialistas locales con antecedentes y cédula validada.</p>
+          </div>
+          <div class="mock-card mock-card--tilt" id="mock-profesional"></div>
+          <div class="mock-card">
+            <div class="row">
+              <span class="live-card__icon"><i data-icono="truck"></i></span>
+              <div class="grow">
+                <span class="live-card__label">EN CAMINO</span>
+                <strong>Reparación fuga de agua</strong>
+                <span class="subtle">El profesional llega en ~12 min</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CATEGORÍAS ===================== -->
+    <section class="section" id="categorias">
+      <div class="container">
+        <div class="section__head">
+          <span class="label-caps">Categorías populares</span>
+          <h2>Todo lo que tu casa necesita, en un solo lugar</h2>
+          <p>Elige una categoría para ver a los profesionales disponibles en tu barrio.</p>
+        </div>
+        <div class="cat-grid cat-grid--landing" id="grid-categorias-landing"></div>
+      </div>
+    </section>
+
+    <!-- ===================== CÓMO FUNCIONA ===================== -->
+    <section class="section section--alt" id="como-funciona">
+      <div class="container">
+        <div class="section__head">
+          <span class="label-caps">Cómo funciona</span>
+          <h2>Resuelve el problema en tres pasos</h2>
+        </div>
+        <div class="steps">
+          <article class="card step">
+            <div class="step__num">1</div>
+            <h3>Busca y compara</h3>
+            <p>Filtra por categoría, barrio, precio y calificación. Todas las tarifas base son visibles antes de solicitar.</p>
+          </article>
+          <article class="card step">
+            <div class="step__num">2</div>
+            <h3>Solicita con detalles</h3>
+            <p>Describe el daño, elige fecha y franja horaria. El profesional confirma y te avisa cuando va en camino.</p>
+          </article>
+          <article class="card step">
+            <div class="step__num">3</div>
+            <h3>Califica y repite</h3>
+            <p>Al terminar, califica el servicio. Las reseñas reales mantienen a la comunidad confiable.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ACCESOS POR ROL ===================== -->
+    <section class="section" id="accesos">
+      <div class="container">
+        <div class="section__head">
+          <span class="label-caps">Accesos</span>
+          <h2>Un espacio para cada rol</h2>
+          <p>Ingresa con tu cuenta o prueba con las cuentas de demostración.</p>
+        </div>
+        <div class="role-grid">
+          <article class="card role-card">
+            <span class="role-card__icon"><i data-icono="home"></i></span>
+            <h3>Soy cliente</h3>
+            <ul>
+              <li>Catálogo con búsqueda y filtros en tiempo real</li>
+              <li>Favoritos y seguimiento de solicitudes</li>
+              <li>Califica cada servicio recibido</li>
+            </ul>
+            <button type="button" class="btn btn-primary btn-block" data-abrir-acceso="CLIENTE">Entrar como cliente</button>
+          </article>
+          <article class="card role-card role-card--accent">
+            <span class="role-card__icon"><i data-icono="wrench"></i></span>
+            <h3>Soy trabajador</h3>
+            <ul>
+              <li>Publica tus servicios, tarifas y zona de cobertura</li>
+              <li>Edita, pausa o elimina tus publicaciones</li>
+              <li>Gestiona las solicitudes que recibes</li>
+            </ul>
+            <button type="button" class="btn btn-accent btn-block" data-abrir-acceso="TRABAJADOR">Entrar como trabajador</button>
+          </article>
+          <article class="card role-card">
+            <span class="role-card__icon"><i data-icono="shield"></i></span>
+            <h3>Administración</h3>
+            <ul>
+              <li>CRUD global de usuarios y servicios</li>
+              <li>Moderación de publicaciones y estados</li>
+              <li>Verificación de trabajadores</li>
+            </ul>
+            <button type="button" class="btn btn-outline btn-block" data-abrir-acceso="ADMIN">Panel de administración</button>
+          </article>
+        </div>
+
+        <div class="cta-band mt-6">
+          <div>
+            <h2>¿Sabes un oficio? Trabaja con CercApp</h2>
+            <p class="mt-2">Crea tu perfil gratis, publica tus servicios y recibe solicitudes de hogares de tu comuna.</p>
+          </div>
+          <button type="button" class="btn btn-accent btn-lg" data-abrir-acceso="TRABAJADOR" data-modo="registro">Registrarme como trabajador</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt">
+      <div class="container">
+        <div class="guarantee-card">
+          <span class="guarantee-card__icon"><i data-icono="shield"></i></span>
+          <div>
+            <h3>Garantía comunitaria CercApp</h3>
+            <p>Los trabajadores verificados presentan cédula y antecedentes. Las tarifas base son públicas y cada servicio puede calificarse al finalizar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <span class="brand">
+        <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2C11.7 2 5 8.6 5 16.8 5 28 20 38 20 38s15-10 15-21.2C35 8.6 28.3 2 20 2Z" fill="#fff"/><path d="M12.5 18.5 20 12.5l7.5 6v7a1 1 0 0 1-1 1h-4v-5h-5v5h-4a1 1 0 0 1-1-1z" fill="#0a2240"/><circle cx="29.5" cy="8.5" r="3.5" fill="#f28c0f"/></svg>
+        <span class="brand__text"><strong>CercApp</strong><small>Neiva · Huila</small></span>
+      </span>
+      <p>© 2026 CercApp. Servicios del hogar con profesionales de tu barrio.</p>
+    </div>
+  </footer>
+
+  <!-- ===================== MODAL DE ACCESO / REGISTRO ===================== -->
+  <dialog class="modal" id="modal-acceso" aria-labelledby="titulo-acceso">
+    <div class="modal__header">
+      <h2 id="titulo-acceso">Ingresar a CercApp</h2>
+      <button type="button" class="btn-icon" data-cerrar-modal aria-label="Cerrar"><i data-icono="x"></i></button>
+    </div>
+    <div class="modal__body stack">
+      <div class="segmented segmented--dark" role="tablist" aria-label="Tipo de cuenta" id="selector-rol">
+        <button type="button" role="tab" data-rol="CLIENTE" class="is-active">Cliente</button>
+        <button type="button" role="tab" data-rol="TRABAJADOR">Trabajador</button>
+        <button type="button" role="tab" data-rol="ADMIN">Administrador</button>
+      </div>
+
+      <div class="segmented" id="selector-modo" aria-label="Acción">
+        <button type="button" data-modo="login" class="is-active">Iniciar sesión</button>
+        <button type="button" data-modo="registro">Crear cuenta</button>
+      </div>
+
+      <!-- Inicio de sesión -->
+      <form id="form-login" class="stack" novalidate>
+        <div class="form-alert" role="alert"></div>
+        <div class="field">
+          <label for="login-email">Correo electrónico <span class="req">*</span></label>
+          <input class="input" id="login-email" name="email" type="email" autocomplete="username" maxlength="120" placeholder="nombre@correo.com">
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="login-password">Contraseña <span class="req">*</span></label>
+          <input class="input" id="login-password" name="password" type="password" autocomplete="current-password" maxlength="100" placeholder="••••••••">
+          <span class="field-error"></span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Ingresar</button>
+        <div class="demo-accounts">
+          <div class="row-between wrap">
+            <span>Cuenta demo: <code id="demo-email"></code> · <code id="demo-pass"></code></span>
+            <button type="button" class="link-btn" id="btn-usar-demo">Usar cuenta demo</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Registro (clientes y trabajadores) -->
+      <form id="form-registro" class="stack" novalidate hidden>
+        <div class="form-alert" role="alert"></div>
+        <div class="form-grid form-grid--2">
+          <div class="field span-2">
+            <label for="reg-nombre">Nombre completo <span class="req">*</span></label>
+            <input class="input" id="reg-nombre" name="nombre" maxlength="100" autocomplete="name" placeholder="Ej: Laura Cristina Medina">
+            <span class="field-error"></span>
+          </div>
+          <div class="field">
+            <label for="reg-email">Correo <span class="req">*</span></label>
+            <input class="input" id="reg-email" name="email" type="email" maxlength="120" autocomplete="email" placeholder="nombre@correo.com">
+            <span class="field-error"></span>
+          </div>
+          <div class="field">
+            <label for="reg-telefono">Celular (10 dígitos) <span class="req">*</span></label>
+            <input class="input" id="reg-telefono" name="telefono" type="text" data-solo-numeros maxlength="10" placeholder="3001234567">
+            <span class="field-error"></span>
+          </div>
+          <div class="field">
+            <label for="reg-barrio">Barrio <span class="req">*</span></label>
+            <select class="input" id="reg-barrio" name="barrio"></select>
+            <span class="field-error"></span>
+          </div>
+          <div class="field">
+            <label for="reg-password">Contraseña <span class="req">*</span></label>
+            <input class="input" id="reg-password" name="password" type="password" maxlength="100" autocomplete="new-password" placeholder="Mínimo 6 caracteres">
+            <span class="field-error"></span>
+          </div>
+          <!-- Solo trabajadores -->
+          <div class="field span-2" data-solo-trabajador>
+            <label for="reg-especialidad">Oficio o especialidad <span class="req">*</span></label>
+            <input class="input" id="reg-especialidad" name="especialidad" maxlength="120" placeholder="Ej: Electricista residencial">
+            <span class="field-error"></span>
+          </div>
+          <div class="field" data-solo-trabajador>
+            <label for="reg-anios">Años de experiencia <span class="req">*</span></label>
+            <input class="input" id="reg-anios" name="aniosExperiencia" type="text" data-solo-numeros maxlength="2" placeholder="0 a 60">
+            <span class="field-error"></span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-accent btn-lg btn-block">Crear mi cuenta</button>
+        <p class="subtle">Las cuentas de trabajador quedan pendientes de verificación por el administrador.</p>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="common.js"></script>
+  <script>
+    /* =====================================================================
+     * Lógica de la landing (index.html)
+     * - Estadísticas y categorías calculadas con los servicios reales (API o modo local)
+     * - Acceso por rol: inicio de sesión, registro y redirección al panel correspondiente
+     * ===================================================================== */
+    (function () {
+      'use strict';
+
+      const CUENTAS_DEMO = {
+        CLIENTE:    { email: 'sebastian.rojas@correo.com', password: 'cliente123' },
+        TRABAJADOR: { email: 'carlos.mendez@cercapp.co',  password: 'trabajador123' },
+        ADMIN:      { email: 'admin@cercapp.co',          password: 'admin123' },
+      };
+      const estado = { rol: 'CLIENTE', modo: 'login', destino: null };
+
+      const modal = document.getElementById('modal-acceso');
+      const formLogin = document.getElementById('form-login');
+      const formRegistro = document.getElementById('form-registro');
+
+      document.getElementById('reg-barrio').innerHTML = UI.opciones(BARRIOS_NEIVA, '', { vacio: 'Selecciona tu barrio' });
+
+      /* ---------- Datos públicos: estadísticas, categorías y tarjeta de ejemplo ---------- */
+      async function cargarResumen() {
+        try {
+          const servicios = await CercAPI.servicios.listar({ estado: 'PUBLICADO' });
+          const activos = servicios.filter(s => s.trabajador && s.trabajador.estado !== 'SUSPENDIDO');
+          const trabajadores = new Set(activos.map(s => s.trabajador.id));
+          const conResenas = activos.filter(s => s.numResenas > 0);
+          const promedio = conResenas.length ? conResenas.reduce((a, s) => a + Number(s.calificacion), 0) / conResenas.length : 0;
+          document.getElementById('stat-profesionales').textContent = trabajadores.size;
+          document.getElementById('stat-servicios').textContent = activos.length;
+          document.getElementById('stat-calificacion').textContent = promedio ? `${promedio.toFixed(1)} ★` : '—';
+          pintarCategorias(activos);
+          pintarTarjetaEjemplo(activos[0]);
+        } catch (e) {
+          UI.toast(e.message, 'error');
+        }
+      }
+
+      function pintarCategorias(servicios) {
+        const cuenta = servicios.reduce((m, s) => (m[s.categoria] = (m[s.categoria] || 0) + 1, m), {});
+        document.getElementById('grid-categorias-landing').innerHTML = Object.entries(CATEGORIAS).map(([clave, c]) => `
+          <button type="button" class="cat-card" data-cat="${clave}">
+            <span class="cat-card__icon">${UI.icono(c.icono)}</span>
+            <strong>${UI.esc(c.nombre)}</strong>
+            <small>${cuenta[clave] || 0} ${(cuenta[clave] || 0) === 1 ? "servicio" : "servicios"}</small>
+          </button>`).join('');
+      }
+
+      function pintarTarjetaEjemplo(s) {
+        const caja = document.getElementById('mock-profesional');
+        if (!s) { caja.hidden = true; return; }
+        caja.innerHTML = `
+          <div class="row">
+            ${UI.avatar(s.trabajador, 'lg')}
+            <div class="grow">
+              <div class="row wrap" style="gap:6px"><strong>${UI.esc(s.trabajador.nombre)}</strong>${UI.badgeVerificado(s.trabajador)}</div>
+              <div class="subtle">${UI.esc(s.titulo)}</div>
+              <div class="mt-2">${UI.calificacion(s.calificacion, s.numResenas)}</div>
+            </div>
+          </div>
+          <div class="row-between mt-4">
+            <div class="price"><small>Tarifa base ${UNIDADES_TARIFA[s.unidadTarifa]}</small><strong>${UI.moneda(s.tarifa)}<span>COP</span></strong></div>
+            <span class="btn btn-accent btn-sm">Solicitar</span>
+          </div>`;
+      }
+
+      /* ---------- Modal de acceso ---------- */
+      function abrirAcceso(rol = 'CLIENTE', modo = 'login', destino = null) {
+        estado.destino = destino;
+        cambiarRol(rol);
+        cambiarModo(modo);
+        UI.abrirModal('modal-acceso');
+        setTimeout(() => (modo === 'login' ? formLogin.email : formRegistro.nombre).focus(), 50);
+      }
+
+      function cambiarRol(rol) {
+        estado.rol = rol;
+        document.querySelectorAll('#selector-rol button').forEach(b => {
+          b.classList.toggle('is-active', b.dataset.rol === rol);
+          b.setAttribute('aria-selected', b.dataset.rol === rol);
+        });
+        // El administrador no se registra desde la web pública
+        document.getElementById('selector-modo').hidden = rol === 'ADMIN';
+        if (rol === 'ADMIN') cambiarModo('login');
+        formRegistro.querySelectorAll('[data-solo-trabajador]').forEach(el => { el.hidden = rol !== 'TRABAJADOR'; });
+        const demo = CUENTAS_DEMO[rol];
+        document.getElementById('demo-email').textContent = demo.email;
+        document.getElementById('demo-pass').textContent = demo.password;
+        document.getElementById('titulo-acceso').textContent =
+          { CLIENTE: 'Acceso de clientes', TRABAJADOR: 'Acceso de trabajadores', ADMIN: 'Acceso administrativo' }[rol];
+        Validar.limpiar(formLogin);
+        Validar.limpiar(formRegistro);
+      }
+
+      function cambiarModo(modo) {
+        estado.modo = modo;
+        document.querySelectorAll('#selector-modo button').forEach(b => b.classList.toggle('is-active', b.dataset.modo === modo));
+        formLogin.hidden = modo !== 'login';
+        formRegistro.hidden = modo !== 'registro';
+      }
+
+      /** Guarda la sesión y redirige al panel del rol (con búsqueda pendiente si la hay). */
+      function entrar(usuario) {
+        Sesion.iniciar(usuario);
+        let destino = Sesion.rutaPorRol(usuario.rol);
+        if (usuario.rol === 'CLIENTE' && estado.destino) destino += estado.destino;
+        UI.toast(`¡Bienvenido, ${UI.primerNombre(usuario.nombre)}!`, 'exito');
+        setTimeout(() => { window.location.href = destino; }, 350);
+      }
+
+      /* ---------- Inicio de sesión ---------- */
+      formLogin.addEventListener('submit', async e => {
+        e.preventDefault();
+        const datos = Validar.formulario(formLogin, {
+          email: [Validar.requerido, Validar.email],
+          password: [Validar.requerido],
+        });
+        if (!datos) return;
+        const boton = formLogin.querySelector('[type="submit"]');
+        UI.cargando(boton, true);
+        try {
+          const usuario = await CercAPI.usuarios.login(datos.email, datos.password);
+          if (usuario.rol !== estado.rol) {
+            UI.toast(`Esta cuenta es de tipo ${usuario.rol.toLowerCase()}; te llevamos a su panel.`);
+          }
+          entrar(usuario);
+        } catch (err) {
+          Validar.mostrarErroresServidor(formLogin, err);
+        } finally {
+          UI.cargando(boton, false);
+        }
+      });
+
+      document.getElementById('btn-usar-demo').addEventListener('click', () => {
+        const demo = CUENTAS_DEMO[estado.rol];
+        formLogin.email.value = demo.email;
+        formLogin.password.value = demo.password;
+        formLogin.requestSubmit();
+      });
+
+      /* ---------- Registro ---------- */
+      formRegistro.addEventListener('submit', async e => {
+        e.preventDefault();
+        const esTrabajador = estado.rol === 'TRABAJADOR';
+        const reglas = {
+          nombre: [Validar.requerido, Validar.minLargo(3), Validar.soloLetras],
+          email: [Validar.requerido, Validar.email],
+          telefono: [Validar.requerido, Validar.telefono],
+          barrio: [Validar.requerido],
+          password: [Validar.requerido, Validar.minLargo(6)],
+        };
+        if (esTrabajador) {
+          reglas.especialidad = [Validar.requerido, Validar.minLargo(4)];
+          reglas.aniosExperiencia = [Validar.requerido, Validar.entero(0, 60, 'Los años de experiencia')];
+        }
+        const datos = Validar.formulario(formRegistro, reglas);
+        if (!datos) return;
+        const boton = formRegistro.querySelector('[type="submit"]');
+        UI.cargando(boton, true);
+        try {
+          const usuario = await CercAPI.usuarios.crear({
+            nombre: datos.nombre,
+            email: datos.email,
+            telefono: datos.telefono,
+            password: datos.password,
+            rol: estado.rol,
+            ciudad: 'Neiva',
+            barrio: datos.barrio,
+            especialidad: esTrabajador ? datos.especialidad : null,
+            aniosExperiencia: esTrabajador ? Number(datos.aniosExperiencia) : null,
+            verificado: false,
+            estado: 'ACTIVO',
+          });
+          entrar(usuario);
+        } catch (err) {
+          Validar.mostrarErroresServidor(formRegistro, err);
+        } finally {
+          UI.cargando(boton, false);
+        }
+      });
+
+      /* ---------- Eventos generales ---------- */
+      document.querySelectorAll('[data-abrir-acceso]').forEach(b =>
+        b.addEventListener('click', () => abrirAcceso(b.dataset.abrirAcceso, b.dataset.modo || 'login')));
+      document.getElementById('selector-rol').addEventListener('click', e => {
+        const b = e.target.closest('[data-rol]'); if (b) cambiarRol(b.dataset.rol);
+      });
+      document.getElementById('selector-modo').addEventListener('click', e => {
+        const b = e.target.closest('[data-modo]'); if (b) cambiarModo(b.dataset.modo);
+      });
+
+      // Búsqueda y categorías: llevan al portal del cliente con el filtro aplicado
+      function irAlCatalogo(parametros) {
+        const sesion = Sesion.obtener();
+        if (sesion && sesion.rol === 'CLIENTE') window.location.href = 'cliente_portal.html' + parametros;
+        else abrirAcceso('CLIENTE', 'login', parametros);
+      }
+      document.getElementById('form-busqueda-hero').addEventListener('submit', e => {
+        e.preventDefault();
+        const q = e.target.q.value.trim();
+        irAlCatalogo(q ? qs({ q }) : '');
+      });
+      document.getElementById('grid-categorias-landing').addEventListener('click', e => {
+        const b = e.target.closest('[data-cat]'); if (b) irAlCatalogo(qs({ categoria: b.dataset.cat }));
+      });
+
+      document.addEventListener('cercapp:recargar', cargarResumen);
+
+      // ?acceso=cliente|trabajador|admin  → abre el acceso (viene de un panel protegido)
+      const acceso = new URLSearchParams(location.search).get('acceso');
+      if (acceso && ['cliente', 'trabajador', 'admin'].includes(acceso)) abrirAcceso(acceso.toUpperCase());
+
+      cargarResumen();
+    })();
+  </script>
+</body>
+</html>

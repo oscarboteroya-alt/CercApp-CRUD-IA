@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!-- Ruta: trabajador_panel.html -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CercApp · Panel del trabajador</title>
+  <meta name="theme-color" content="#0a2240">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-app">
+
+  <header class="app-header">
+    <div class="container app-header__inner">
+      <a class="brand" href="index.html" aria-label="CercApp, inicio">
+        <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2C11.7 2 5 8.6 5 16.8 5 28 20 38 20 38s15-10 15-21.2C35 8.6 28.3 2 20 2Z" fill="#0a2240"/><path d="M12.5 18.5 20 12.5l7.5 6v7a1 1 0 0 1-1 1h-4v-5h-5v5h-4a1 1 0 0 1-1-1z" fill="#fff"/><circle cx="29.5" cy="8.5" r="3.5" fill="#f28c0f"/></svg>
+        <span class="brand__text"><strong>CercApp</strong><small>Panel del trabajador</small></span>
+      </a>
+      <div class="app-header__right">
+        <span class="conn-badge" data-conexion>Conectando…</span>
+        <button type="button" class="btn-icon" data-salir aria-label="Cerrar sesión" title="Cerrar sesión"><i data-icono="logout"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="app-tabs" aria-label="Secciones del panel">
+    <div class="app-tabs__inner" id="tabs">
+      <button type="button" class="app-tab is-active" data-vista="servicios"><i data-icono="briefcase"></i>Mis servicios</button>
+      <button type="button" class="app-tab" data-vista="solicitudes"><i data-icono="clipboard"></i>Solicitudes<span class="app-tab__count" id="cuenta-solicitudes"></span></button>
+      <button type="button" class="app-tab" data-vista="perfil"><i data-icono="user"></i>Mi perfil</button>
+    </div>
+  </nav>
+
+  <main class="container app-main">
+    <!-- Resumen del trabajador -->
+    <section class="worker-hero" id="resumen-trabajador" aria-label="Resumen"></section>
+
+    <!-- ===================== VISTA: MIS SERVICIOS (CRUD) ===================== -->
+    <section class="vista mt-6" id="vista-servicios">
+      <div class="row-between wrap">
+        <div class="vista-head">
+          <h1>Mis servicios del hogar</h1>
+          <p class="muted">Publica, edita, pausa o elimina lo que ofreces. Los servicios nuevos pasan por revisión del administrador.</p>
+        </div>
+        <button type="button" class="btn btn-accent" id="btn-nuevo-servicio"><i data-icono="plus"></i> Nuevo servicio</button>
+      </div>
+      <div class="segmented" id="filtro-servicios" aria-label="Filtrar por estado">
+        <button type="button" data-filtro="TODOS" class="is-active">Todos</button>
+        <button type="button" data-filtro="PUBLICADO">Publicados</button>
+        <button type="button" data-filtro="PENDIENTE">En revisión</button>
+        <button type="button" data-filtro="PAUSADO">Pausados</button>
+        <button type="button" data-filtro="RECHAZADO">Rechazados</button>
+      </div>
+      <div class="svc-grid" id="lista-servicios">
+        <div class="skeleton"></div><div class="skeleton"></div>
+      </div>
+    </section>
+
+    <!-- ===================== VISTA: SOLICITUDES RECIBIDAS ===================== -->
+    <section class="vista mt-6" id="vista-solicitudes" hidden>
+      <div class="vista-head">
+        <h1>Solicitudes recibidas</h1>
+        <p class="muted">Acepta los trabajos y actualiza su estado para que el cliente siga el avance en vivo.</p>
+      </div>
+      <div class="segmented" id="filtro-solicitudes">
+        <button type="button" data-filtro="ACTIVAS" class="is-active">Activas</button>
+        <button type="button" data-filtro="PENDIENTE">Nuevas</button>
+        <button type="button" data-filtro="COMPLETADA">Completadas</button>
+        <button type="button" data-filtro="CANCELADA">Canceladas</button>
+      </div>
+      <div class="order-list" id="lista-solicitudes"></div>
+    </section>
+
+    <!-- ===================== VISTA: MI PERFIL ===================== -->
+    <section class="vista mt-6" id="vista-perfil" hidden>
+      <div class="vista-head">
+        <h1>Mi perfil profesional</h1>
+        <p class="muted">Esta información aparece en tu perfil público del catálogo.</p>
+      </div>
+      <form id="form-perfil" class="card card-pad stack" novalidate>
+        <div class="form-alert" role="alert"></div>
+        <div class="form-grid form-grid--2">
+          <div class="field span-2">
+            <label for="perfil-nombre">Nombre completo <span class="req">*</span></label>
+            <input class="input" id="perfil-nombre" name="nombre" maxlength="100" autocomplete="name">
+            <span class="field-error"></span>
+          </div>
+          <div class="field">
+            <label for="perfil-email">Correo <span class="req">*</span></label>
+            <input class="input" id="perfil-email" name="email" type="email" maxlength="120">
+            <span class="field-error"></span>
+          </div>
+          <div class="field">
+            <label for="perfil-telefono">Celular (10 dígitos) <span class="req">*</span></label>
+            <input class="input" id="perfil-telefono" name="telefono" type="text" data-solo-numeros maxlength="10">
+            <span class="field-error"></span>
+          </div>
+          <div class="field span-2">
+            <label for="perfil-especialidad">Oficio o especialidad <span class="req">*</span></label>
+            <input class="input" id="perfil-especialidad" name="especialidad" maxlength="120" placeholder="Ej: Plomería e instalaciones hidráulicas">
+            <span class="field-error"></span>
+          </div>
+          <div class="field">
+            <label for="perfil-anios">Años de experiencia <span class="req">*</span></label>
+            <input class="input" id="perfil-anios" name="aniosExperiencia" type="text" data-solo-numeros maxlength="2" placeholder="0 a 60">
+            <span class="field-error"></span>
+          </div>
+          <div class="field">
+            <label for="perfil-barrio">Barrio base <span class="req">*</span></label>
+            <select class="input" id="perfil-barrio" name="barrio"></select>
+            <span class="field-error"></span>
+          </div>
+          <div class="field span-2">
+            <label for="perfil-direccion">Dirección</label>
+            <input class="input" id="perfil-direccion" name="direccion" maxlength="150">
+            <span class="field-error"></span>
+          </div>
+          <div class="field span-2">
+            <label for="perfil-password">Nueva contraseña</label>
+            <input class="input" id="perfil-password" name="password" type="password" maxlength="100" autocomplete="new-password" placeholder="Déjala vacía para conservar la actual">
+            <span class="field-error"></span>
+          </div>
+        </div>
+        <div class="row wrap">
+          <button type="submit" class="btn btn-primary">Guardar perfil</button>
+          <button type="button" class="btn btn-outline" data-salir><i data-icono="logout"></i> Cerrar sesión</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- ===================== MODAL: CREAR / EDITAR SERVICIO ===================== -->
+  <dialog class="modal modal--wide" id="modal-servicio" aria-labelledby="titulo-modal-servicio">
+    <div class="modal__header">
+      <h2 id="titulo-modal-servicio">Nuevo servicio</h2>
+      <button type="button" class="btn-icon" data-cerrar-modal aria-label="Cerrar"><i data-icono="x"></i></button>
+    </div>
+    <form id="form-servicio" class="modal__body stack" novalidate>
+      <input type="hidden" name="editandoId">
+      <div class="form-alert" role="alert"></div>
+      <div class="form-grid form-grid--2">
+        <div class="field">
+          <label for="svc-categoria">Categoría <span class="req">*</span></label>
+          <select class="input" id="svc-categoria" name="categoria"></select>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="svc-titulo">Título del servicio <span class="req">*</span></label>
+          <input class="input" id="svc-titulo" name="titulo" maxlength="120" placeholder="Ej: Destape de cañerías y sifones">
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="svc-tarifa">Tarifa base en COP <span class="req">*</span></label>
+          <input class="input" id="svc-tarifa" name="tarifa" type="text" data-solo-numeros maxlength="8" placeholder="Ej: 45000">
+          <span class="field-hint">Solo números, sin puntos ni signos ($1.000 a $10.000.000).</span>
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="svc-unidad">Se cobra <span class="req">*</span></label>
+          <select class="input" id="svc-unidad" name="unidadTarifa"></select>
+          <span class="field-error"></span>
+        </div>
+        <div class="field span-2">
+          <label for="svc-disponibilidad">Disponibilidad <span class="req">*</span></label>
+          <input class="input" id="svc-disponibilidad" name="disponibilidad" maxlength="150" list="lista-disponibilidad" placeholder="Ej: Lunes a sábado · 7:00 a.m. – 7:00 p.m.">
+          <datalist id="lista-disponibilidad"></datalist>
+          <span class="field-error"></span>
+        </div>
+        <div class="field span-2">
+          <span class="field-label">Zona de cobertura (barrios de Neiva) <span class="req">*</span></span>
+          <div class="chip-row chip-row--wrap" id="svc-zonas" role="group" aria-label="Barrios de cobertura"></div>
+          <span class="field-error"></span>
+        </div>
+        <div class="field span-2">
+          <div class="field-row">
+            <label for="svc-descripcion">Descripción <span class="req">*</span></label>
+            <span class="char-count" id="contador-svc"></span>
+          </div>
+          <textarea class="input" id="svc-descripcion" name="descripcion" maxlength="1000" data-contador="contador-svc"
+                    placeholder="Qué incluye, materiales, garantía, herramientas…"></textarea>
+          <span class="field-hint">Mínimo 20 caracteres.</span>
+          <span class="field-error"></span>
+        </div>
+      </div>
+      <div class="notice" id="aviso-moderacion">
+        <i data-icono="info"></i>
+        <span>Los servicios nuevos quedan <strong>En revisión</strong> hasta que el administrador los apruebe.</span>
+      </div>
+      <div class="row wrap" style="justify-content:flex-end">
+        <button type="button" class="btn btn-ghost" data-cerrar-modal>Cancelar</button>
+        <button type="submit" class="btn btn-primary" id="btn-guardar-servicio">Guardar servicio</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="common.js"></script>
+  <script src="trabajador_panel.js"></script>
+</body>
+</html>
